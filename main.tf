@@ -9,3 +9,9 @@ resource "aws_docdb_cluster" "main" {
   db_subnet_group_name            = aws_docdb_subnet_group.main.name
 }
 
+resource "aws_docdb_cluster_instance" "instance" {
+  count              = var.NODE_COUNT
+  identifier         = "${var.COMPONENT}-${var.ENV}-node-${count.index}"
+  cluster_identifier = aws_docdb_cluster.main.id
+  instance_class     = var.NODE_TYPE
+}
